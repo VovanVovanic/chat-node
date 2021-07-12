@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Auth from './pages/auth/auth'
+import axios from 'axios'
+import { useEffect } from 'react';
 
 function App() {
+
+  const authHandler = (data) => {
+    axios.post('/users/register', data).then((res) => {
+      const data = {
+        name: res.data.user.username,
+        token: res.data.token,
+      };
+      localStorage.setItem("data", JSON.stringify(data))
+    }).catch((e) => {
+      console.log(e);
+    });
+  }
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("data"));
+    console.log(data);
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Auth button={"Register"} authHandler={authHandler}/>
     </div>
   );
 }
