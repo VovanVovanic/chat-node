@@ -1,19 +1,24 @@
 import classes from "./auth.module.scss";
 import { useFormik } from "formik";
+import { useHistory } from "react-router-dom";
 
-export default function Auth({ button, authHandler }) {
-  
-
+export default function Auth({ button, authHandler, type }) {
   const formik = useFormik({
     initialValues: {
       username: "",
       password: ""
     },
     onSubmit(data) {
-      authHandler(data)
+      authHandler(data, type)
       formik.resetForm();
     }
   })
+
+  const history = useHistory()
+  const goRegister = () => {
+    localStorage.setItem("user", null)
+    history.push("/")
+  }
   return (
     <div className={classes.login}>
       <div className={classes.loginWrapper}>
@@ -34,6 +39,16 @@ export default function Auth({ button, authHandler }) {
             {button}
           </button>
         </form>
+        {type === "login" && (
+          <div className = {`${classes.loginBox} ${classes.goRegisterWrap}`}>
+            <button
+              className={`${classes.loginButton} ${classes.toRegister}`}
+              onClick={goRegister}
+            >
+              Switch to registration
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
