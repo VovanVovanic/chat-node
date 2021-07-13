@@ -83,7 +83,7 @@ console.log(user, error);
               </Route>
               <Route path='/register' >
                 <>
-                  {user ? <Redirect to = "/" /> : <Auth button={"Register"} authHandler={regHandler} type="Register" />}
+                  {user ? <Redirect to="/" /> : <Auth button={"Register"} authHandler={regHandler} type="register" loginHandler={authHandler}/>}
                 </>
               </Route>
           </Switch>
