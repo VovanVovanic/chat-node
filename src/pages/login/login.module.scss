@@ -11,16 +11,12 @@
   width: 70%;
   height: 70%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 
 .loginBox{
     height: 300px;
     padding: 20px;
-    width: 70%;
     background-color: white;
     border-radius: 10px;
     display: flex;
@@ -50,10 +46,29 @@
     font-weight: 500;
     cursor: pointer;
 }
-.loginButton.toRegister{
-  background-color: 	#98FB98;
+
+.loginButton:focus{
+  outline: none;
 }
-.loginBox.goRegisterWrap{
-  margin-top: 10px;
-  height: auto
+
+.loginButton:disabled{
+  cursor: not-allowed;
+}
+
+.loginForgot{
+    text-align: center;
+    color: #1775ee;
+}
+
+.loginRegisterButton{
+    width: 60%;
+    align-self: center;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #42b72a;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
 }
