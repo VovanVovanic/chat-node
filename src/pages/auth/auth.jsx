@@ -24,6 +24,7 @@ export default function Auth({ button, authHandler, type, loginHandler }) {
     dispatch(LoginSuccess(user))
     history.push("/")
   }
+
   const goLogin = () => {
     const data = {
       username: formik.getFieldProps("username").value,
