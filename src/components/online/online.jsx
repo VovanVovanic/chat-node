@@ -6,7 +6,7 @@ const ChatOnline = () => {
       <div className={classes.chatOnlineFriend}>
         <div className={classes.chatOnlineImgConteiner}>
           <img src="" alt="" className={classes.chatOnlineImg} />
-          <div className={classes.chatOnlineBagde}></div>
+          <div className={classes.chatOnlineBadge}></div>
         </div>
         <span className={classes.chatOnlineName}>Some name</span>
       </div>
