@@ -3,22 +3,15 @@ import { useEffect, useState } from "react";
 import classes from './chat.module.scss'
 
 export default function Chat({ onlineUsers, currentId, setCurrentChat }) {
-  const [friends, setFriends] = useState([]);
-  const [onlineFriends, setOnlineFriends] = useState([]);
 
+  const  [onlineFriends, setOnlineFriends] = useState([])
 
+console.log(onlineFriends);
   useEffect(() => {
-    const getFriends = async () => {
-      const res = await axios.get("/users/friends/" + currentId);
-      setFriends(res.data);
-    };
-
-    getFriends();
-  }, [currentId]);
-
-  useEffect(() => {
-    setOnlineFriends(friends.filter((friend) => onlineUsers.includes(friend._id)));
-  }, [friends, onlineUsers]);
+    const users = []
+    users.push(onlineUsers)
+    setOnlineFriends(users)
+  }, [onlineUsers]);
 
   const handleClick = async (user) => {
     try {
@@ -44,7 +37,7 @@ export default function Chat({ onlineUsers, currentId, setCurrentChat }) {
           </div>
           <span className={classes.chatOnlineName}>{friend?.username}</span>
         </div>
-      ))}
+      ))} 
     </div>
   );
 }

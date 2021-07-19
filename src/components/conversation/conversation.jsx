@@ -4,7 +4,7 @@ import classes from './conversation.module.scss';
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
-  
+ 
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
 
