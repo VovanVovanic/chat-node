@@ -91,8 +91,10 @@
 
 // export default App;
 
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
+import React, {useState, useEffect} from 'react'
+import Login from "./pages/login/login";
+import Register from "./pages/register/register";
+import axios from 'axios'
 import {
   BrowserRouter as Router,
   Switch,
@@ -100,23 +102,41 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/authContext";
 import Main from "./pages/main/main";
 
 function App() {
+  const [conversations, setConversations] = useState([]);
   const { user } = useContext(AuthContext);
+    useEffect(() => {
+      const getConversations = async () => {
+        try {
+          const res = await axios.get("/conversations/" + user._id);
+          console.log(res.data)
+          setConversations(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getConversations();
+    }, []);
+  
+  
+  
+
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
           {user ? <Login /> : <Register />}
         </Route>
-        <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+        <Route path="/login">{user ? <Redirect to="/main" /> : <Login />}</Route>
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
         </Route>
-        <Route path="/messenger">
-          {!user ? <Redirect to="/" /> : <Main />}
+        <Route path="/main">
+          <Main />
         </Route>
       </Switch>
     </Router>

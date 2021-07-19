@@ -11,10 +11,13 @@
   width: 70%;
   height: 70%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginBox{
     height: 400px;
+    width: 60%;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -48,7 +51,7 @@
 
 
 .loginRegisterButton{
-    width: 60%;
+    width:100%;
     align-self: center;
     height: 50px;
     border-radius: 10px;

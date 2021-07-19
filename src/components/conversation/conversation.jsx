@@ -4,8 +4,7 @@ import classes from './conversation.module.scss';
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
+  
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
 
@@ -24,7 +23,7 @@ export default function Conversation({ conversation, currentUser }) {
     <div className={classes.conversation}>
       <img
         className={classes.conversationImg}
-        src=""
+        src={user?.avatar ? user.avatar : "localhost:3003/public/images/small.jpg"}
         alt=""
       />
       <span className={classes.conversation.name}>{user?.username}</span>
