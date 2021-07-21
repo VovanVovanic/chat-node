@@ -5,6 +5,7 @@ import ChatOnline from "../../components/chat/chat";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
+import Appbar from '../../components/appbar/appbar'
 import { io } from "socket.io-client";
 
 export default function Messenger() {
@@ -99,7 +100,8 @@ export default function Messenger() {
   }, [messages]);
 
   return (
-    <>
+    <div>
+      <Appbar />
       <div className={classes.messenger}>
         <div className={classes.chatMenu}>
           <div className={classes.chatMenuWrapper}>
@@ -157,6 +159,6 @@ export default function Messenger() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

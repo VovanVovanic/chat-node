@@ -1,6 +1,7 @@
 import { useContext, useRef } from "react";
+import { useHistory} from "react-router-dom";
 import classes from './login.module.scss'
-import { loginCall } from "../../authHelper";
+import axios from 'axios'
 import { AuthContext } from "../../context/authContext";
 import { CircularProgress } from "@material-ui/core";
 
@@ -9,12 +10,24 @@ export default function Login() {
   const password = useRef();
   const { isFetching, dispatch } = useContext(AuthContext);
 
-  const handleClick = (e) => {
+
+  const history = useHistory()
+  const handleClick = async (e) => {
     e.preventDefault();
-    loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+    const data = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+  dispatch({ type: "LOGIN_START" });
+  try {
+    const res = await axios.post("/auth/login", data);
+    console.log(res);
+    dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+  history.push("/main");
+  } catch (err) {
+    dispatch({ type: "LOGIN_FAILURE", payload: err });
+  }
+    
   };
 
   return (
