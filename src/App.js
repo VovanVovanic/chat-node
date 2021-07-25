@@ -11,33 +11,32 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 import Main from "./pages/main/main";
+import MessageSnackbar from './components/messageSnackbar/messageSnackBar'
+import ErrorSnackbar from "./components/errorSnackbar/errorSnackbar";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { isAuth, message, error, isFetching } = useContext(AuthContext);
+  console.log(message)
 
-  useEffect(() => {
-    const u = JSON.parse(localStorage.getItem("user"));
-    console.log(u);
-    axios
-      .post("/auth/auth", u)
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
-  }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Register />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/main">
-          <Main />
-        </Route>
-      </Switch>
-    </Router>
+    <div>
+      <MessageSnackbar message={message} />
+      <ErrorSnackbar message={error} />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/main">
+            {isAuth ? <div>logged</div> : <Redirect to="/" />}
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

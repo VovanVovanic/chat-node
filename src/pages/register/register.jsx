@@ -1,71 +1,78 @@
-import axios from "axios";
-import { useRef } from "react";
-import classes from './register.module.scss'
-import { useHistory } from "react-router";
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import classes from "./login.module.scss";
+import { useFormik } from "formik";
+import { AuthContext } from "../../context/authContext";
+import { login } from "../../utils/auth";
+
 
 export default function Register() {
-  const username = useRef();
-  const email = useRef();
-  const password = useRef();
-  const passwordAgain = useRef();
+  const { dispatch } = useContext(AuthContext);
+
   const history = useHistory();
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    if (passwordAgain.current.value !== password.current.value) {
-      passwordAgain.current.setCustomValidity("Passwords don't match!");
-    } else {
-      const user = {
-        username: username.current.value,
-        email: email.current.value,
-        password: password.current.value,
-      };
-      try {
-        await axios.post("/auth/register", user);
-        history.push("/login");
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  const toLogin= () => {
+    history.push("/");
   };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate: (values) => {
+      const errors = {};
+      if (!values.email) {
+        errors.email = "Required";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+      ) {
+        errors.email = "Invalid email address";
+      }
+      if (values.password.length < 5) {
+        errors.password = "Too Short password";
+      }
+      return errors;
+    },
+
+    onSubmit: (values) => {
+      login(values.email, values.password, dispatch);
+      formik.resetForm();
+    },
+  });
 
   return (
     <div className={classes.login}>
       <div className={classes.loginWrapper}>
-          <form className={classes.loginBox} onSubmit={handleClick}>
-            <input
-              placeholder="Username"
-              required
-              ref={username}
-              className={classes.loginInput}
-            />
-            <input
-              placeholder="Email"
-              required
-              ref={email}
-              className={classes.loginInput}
-              type="email"
-            />
-            <input
-              placeholder="Password"
-              required
-              ref={password}
-              className={classes.loginInput}
-              type="password"
-              minLength="6"
-            />
-            <input
-              placeholder="Password Again"
-              required
-              ref={passwordAgain}
-              className={classes.loginInput}
-              type="password"
-            />
-            <button className={classes.loginButton} type="submit">
-              Sign Up
-            </button>
-            <button className={classes.loginRegisterButton}>Log into Account</button>
-          </form>
+        <form className={classes.loginBox} onSubmit={formik.handleSubmit}>
+          <input
+            placeholder="Email"
+            type="email"
+            {...formik.getFieldProps("email")}
+            className={classes.loginInput}
+          />
+          <input
+            placeholder="Name"
+            type="text"
+            {...formik.getFieldProps("name")}
+            className={classes.loginInput}
+          />
+          <input
+            placeholder="Password"
+            type="password"
+            {...formik.getFieldProps("password")}
+            className={classes.loginInput}
+          />
+          <button className={classes.loginButton} type="submit">
+            Log In
+          </button>
+          <button
+            className={classes.loginRegisterButton}
+            onClick={toLogin}
+          >
+            Go to login
+          </button>
+        </form>
       </div>
     </div>
   );

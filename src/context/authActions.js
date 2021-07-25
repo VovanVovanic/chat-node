@@ -2,14 +2,16 @@ export const LoginStart = () => ({
   type: "LOGIN_START",
 });
 
-export const LoginSuccess = (user) => ({
+export const LoginSuccess = (user, message, auth) => ({
   type: "LOGIN_SUCCESS",
-  payload: user,
+  user,
+  message,
+  auth
 });
 
 export const LoginFailure = (error) => ({
   type: "LOGIN_FAILURE",
-  payload: error
+  error
 });
 
 export const AuthSuccess = (user) => ({
@@ -22,3 +24,7 @@ export const AuthFailure = (error, user) => ({
   error,
   user
 });
+
+export const removeMessage = () => ({
+  type: "REMOVE_MESSAGE"
+})

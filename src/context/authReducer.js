@@ -9,16 +9,18 @@ const AuthReducer = (state, action) => {
     case "LOGIN_SUCCESS":
       return {
         ...state,
-        user: action.payload,
+        user: action.user,
         isLoading: false,
         error: "",
+        isAuth: action.auth,
+        message: action.message
       };
     case "LOGIN_FAILURE":
       return {
         ...state,
         user: null,
         isLoading: false,
-        error: action.payload,
+        error: action.error,
       };
     case "AUTH_SUCCESS":
       return {
@@ -28,6 +30,12 @@ const AuthReducer = (state, action) => {
         error: "",
         isAuth: true,
       };
+    case "REMOVE_MESSAGE": {
+      return {
+        ...state,
+        message: ""
+      }
+    }
     case "AUTH_FAILURE":
       return {
         ...state,
