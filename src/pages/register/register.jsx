@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import classes from "./login.module.scss";
+import classes from "./register.module.scss";
 import { useFormik } from "formik";
 import { AuthContext } from "../../context/authContext";
-import { login } from "../../utils/auth";
+import { register } from "../../utils/auth";
 
 
 export default function Register() {
@@ -19,6 +19,7 @@ export default function Register() {
     initialValues: {
       email: "",
       password: "",
+      name: ""
     },
     validate: (values) => {
       const errors = {};
@@ -36,8 +37,9 @@ export default function Register() {
     },
 
     onSubmit: (values) => {
-      login(values.email, values.password, dispatch);
+      register(values.email, values.password, values.name, dispatch);
       formik.resetForm();
+      history.push("/main");
     },
   });
 
@@ -52,19 +54,19 @@ export default function Register() {
             className={classes.loginInput}
           />
           <input
-            placeholder="Name"
-            type="text"
-            {...formik.getFieldProps("name")}
-            className={classes.loginInput}
-          />
-          <input
             placeholder="Password"
             type="password"
             {...formik.getFieldProps("password")}
             className={classes.loginInput}
           />
+          <input
+            placeholder="Name"
+            type="text"
+            {...formik.getFieldProps("name")}
+            className={classes.loginInput}
+          />
           <button className={classes.loginButton} type="submit">
-            Log In
+           Register
           </button>
           <button
             className={classes.loginRegisterButton}

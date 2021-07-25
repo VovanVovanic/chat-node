@@ -16,23 +16,21 @@ import ErrorSnackbar from "./components/errorSnackbar/errorSnackbar";
 
 function App() {
   const { isAuth, message, error, isFetching } = useContext(AuthContext);
-  console.log(message)
-
-
+  console.log(isAuth, "auth")
   return (
     <div>
       <MessageSnackbar message={message} />
-      <ErrorSnackbar message={error} />
+      <ErrorSnackbar error={error} />
       <Router>
         <Switch>
           <Route exact path="/">
-            <Login />
+            { isAuth === false ? <Login /> : <Redirect to = '/main' />}
           </Route>
           <Route path="/register">
-            <Register />
+            { isAuth === false ? <Register /> : <Redirect to = "/main" />}
           </Route>
           <Route path="/main">
-            {isAuth ? <div>logged</div> : <Redirect to="/" />}
+          {isAuth === true ? <div>logged</div> : <Redirect to = '/' /> }
           </Route>
         </Switch>
       </Router>
