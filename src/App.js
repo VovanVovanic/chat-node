@@ -16,7 +16,6 @@ import ErrorSnackbar from "./components/errorSnackbar/errorSnackbar";
 
 function App() {
   const { isAuth, message, error, isFetching } = useContext(AuthContext);
-  console.log(isAuth, "auth")
   return (
     <div>
       <MessageSnackbar message={message} />
